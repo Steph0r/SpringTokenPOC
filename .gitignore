@@ -1,6 +1,9 @@
 # Eclipse Stuff
 .metadata
 RemoteSystemsTempFiles
+Servers
+Tomcat
+SpringTokenPOC/.settings
 
 # Windows image file caches
 Thumbs.db
