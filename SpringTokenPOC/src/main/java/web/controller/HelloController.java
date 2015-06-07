@@ -18,6 +18,16 @@ public class HelloController {
 		return model;
  
 	}
+	
+	public ModelAndView test() {
+		 
+		ModelAndView model = new ModelAndView();
+		model.addObject("title", "test");
+		model.addObject("message", "This is the welcome page!");
+		model.setViewName("hello");
+		return model;
+ 
+	}
  
 	@RequestMapping(value = "/admin**", method = RequestMethod.GET)
 	public ModelAndView adminPage() {
