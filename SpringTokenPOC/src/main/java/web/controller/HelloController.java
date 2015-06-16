@@ -20,14 +20,19 @@ public class HelloController {
 	public ModelAndView welcomePage() {
  
 		UserService us = new UserService();
+        TokenHandler th = new TokenHandler("tooManySecrets", us);
+        
         us.addUser(new User("admin", "admin", new ArrayList<GrantedAuthority>() {{ new SimpleGrantedAuthority("ROLE_ADMIN"); }} ));
-		TokenHandler th = new TokenHandler("tooManySecrets", us);
 		User admin = us.loadUserByUsername("admin");
-		String token = th.createTokenForUser(admin);
+		String adminToken = th.createTokenForUser(admin);
 		
+		us.addUser(new User("user", "user", new ArrayList<GrantedAuthority>() {{ new SimpleGrantedAuthority("ROLE_USER"); }} ));
+		User user = us.loadUserByUsername("user");
+		String userToken = th.createTokenForUser(user);
+				
 		ModelAndView model = new ModelAndView();
 		model.addObject("title", "Spring Security Hello World");
-		model.addObject("message", "Try to access /admin with and without this token in the X-AUTH-TOKEN header field<br><br>" + token);
+		model.addObject("message", "Try to access /admin with and without this token in the X-AUTH-TOKEN header field (Admin) <br><br>" + adminToken + "<br><br>And now with this one (User)<br><br>" + userToken);
 		model.setViewName("hello");
 		return model;
  

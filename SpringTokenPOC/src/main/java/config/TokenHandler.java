@@ -28,6 +28,7 @@ public final class TokenHandler {
     public String createTokenForUser(User user) {
         return Jwts.builder()
                 .setSubject(user.getUsername())
+                .claim("roles", user.getUsername())
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
     }
