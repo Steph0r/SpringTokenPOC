@@ -21,18 +21,16 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
  
-    private final UserService userService;
     private final TokenAuthenticationService tokenAuthenticationService;
  
     @Autowired
     public SecurityConfig() {
         super(true);
-        this.userService = new UserService();
-        tokenAuthenticationService = new TokenAuthenticationService("tooManySecrets", userService);
+        tokenAuthenticationService = new TokenAuthenticationService("tooManySecrets");
         
         //test users
-        userService.addUser(new User("user", "user", new ArrayList<GrantedAuthority>() {{ new SimpleGrantedAuthority("ROLE_USER"); }} ));
-        userService.addUser(new User("admin", "admin", new ArrayList<GrantedAuthority>() {{ new SimpleGrantedAuthority("ROLE_ADMIN"); }} ));
+//        userService.addUser(new User("user", "user", new ArrayList<GrantedAuthority>() {{ new SimpleGrantedAuthority("ROLE_USER"); }} ));
+//        userService.addUser(new User("admin", "admin", new ArrayList<GrantedAuthority>() {{ new SimpleGrantedAuthority("ROLE_ADMIN"); }} ));
         
     }
  
@@ -72,12 +70,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
-    }
- 
-    @Bean
-    @Override
-    public UserService userDetailsService() {
-        return userService;
     }
  
     @Bean

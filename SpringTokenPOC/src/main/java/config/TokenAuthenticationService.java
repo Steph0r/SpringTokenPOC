@@ -10,10 +10,10 @@ public class TokenAuthenticationService {
 	 
     private static final String AUTH_HEADER_NAME = "X-AUTH-TOKEN";
  
-    private final TokenHandler tokenHandler;
+    private final MyTokenHandler tokenHandler;
  
-    public TokenAuthenticationService(String secret, UserService userService) {
-        tokenHandler = new TokenHandler(secret, userService);
+    public TokenAuthenticationService(String secret) {
+        tokenHandler = new MyTokenHandler(secret);
     }
  
     public void addAuthentication(HttpServletResponse response, UserAuthentication authentication) {

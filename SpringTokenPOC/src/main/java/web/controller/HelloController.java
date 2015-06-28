@@ -10,8 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import config.TokenHandler;
-import config.UserService;
+import config.MyTokenHandler;
  
 @Controller
 public class HelloController {
@@ -19,15 +18,12 @@ public class HelloController {
 	@RequestMapping(value = { "/", "/welcome**" }, method = RequestMethod.GET)
 	public ModelAndView welcomePage() {
  
-		UserService us = new UserService();
-        TokenHandler th = new TokenHandler("tooManySecrets", us);
+        MyTokenHandler th = new MyTokenHandler("tooManySecrets");
         
-        us.addUser(new User("admin", "admin", new ArrayList<GrantedAuthority>() {{ new SimpleGrantedAuthority("ROLE_ADMIN"); }} ));
-		User admin = us.loadUserByUsername("admin");
+        User admin = new User("admin", "admin", new ArrayList<GrantedAuthority>() {{ new SimpleGrantedAuthority("ROLE_ADMIN"); }} );
 		String adminToken = th.createTokenForUser(admin);
 		
-		us.addUser(new User("user", "user", new ArrayList<GrantedAuthority>() {{ new SimpleGrantedAuthority("ROLE_USER"); }} ));
-		User user = us.loadUserByUsername("user");
+		User user = new User("user", "user", new ArrayList<GrantedAuthority>() {{ new SimpleGrantedAuthority("ROLE_USER"); }} );
 		String userToken = th.createTokenForUser(user);
 				
 		ModelAndView model = new ModelAndView();
