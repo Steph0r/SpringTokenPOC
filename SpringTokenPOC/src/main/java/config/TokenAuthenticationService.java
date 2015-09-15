@@ -1,5 +1,9 @@
 package config;
 
+import java.security.KeyPair;
+import java.security.PrivateKey;
+import java.security.PublicKey;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,8 +16,8 @@ public class TokenAuthenticationService {
  
     private final MyTokenHandler tokenHandler;
  
-    public TokenAuthenticationService(String secret) {
-        tokenHandler = new MyTokenHandler(secret);
+    public TokenAuthenticationService(PrivateKey privKey, PublicKey pubKey) {
+        tokenHandler = new MyTokenHandler(privKey, pubKey);
     }
  
     public void addAuthentication(HttpServletResponse response, UserAuthentication authentication) {
@@ -30,5 +34,9 @@ public class TokenAuthenticationService {
             }
         }
         return null;
+    }
+    
+    public MyTokenHandler getTokenHandler() {
+    	return tokenHandler;
     }
 }
